@@ -17,7 +17,8 @@ defmodule TcpExample do
       DynamicSupervisor.start_child(TcpExample.Handler.DynamicSupervisor, %{
         id: Handler,
         start: {Handler, :start_link, [%{socket: client}, []]},
-        type: :worker
+        type: :worker,
+        restart: :transient
       })
 
     :gen_tcp.controlling_process(client, pid)

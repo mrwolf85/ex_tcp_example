@@ -23,12 +23,12 @@ defmodule TcpExample.Handler do
   @impl true
   def handle_info({:tcp_closed, _socket}, state) do
     Logger.info("Socket is closed")
-    {:noreply, state}
+    {:stop, {:shutdown, "Socket is closed"}, state}
   end
 
   @impl true
   def handle_info({:tcp_error, _socket, reason}, state) do
     Logger.error("Tcp error: #{inspect(reason)}")
-    {:noreply, state}
+    {:stop, {:shutdown, "Tcp error: #{inspect(reason)}"}, state}
   end
 end
